@@ -27,7 +27,7 @@ Para esta prática, optou-se pela utilização de áudio histórico real contend
 
 O desenvolvimento está dividido em 3 partes:
 
-### Parte 1: Análise do Áudio Ruidoso ![Relatorio Parte 1](/docs/readmeTiago.md).
+### Parte 1: Análise do Áudio Ruidoso [Relatorio Parte 1](/docs/readmeTiago.md).
 
   - [x] Carregar o áudio recortado (`.wav` ou `.mp3`) no MATLAB.
   - [x] Reproduzir e descrever o conteúdo audível (Voz vs. Ruído).
