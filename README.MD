@@ -1,8 +1,11 @@
 # PDS - Atividade Prática 3: Projeto de Filtros Digitais
 
-Este repositório contém os códigos, dados e resultados da **Atividade Prática 3** da disciplina de **Processamento Digital de Sinais (PDS)** da UTFPR-AP.
+![Status](https://img.shields.io/badge/Status-Análise_Concluída-green) ![MATLAB](https://img.shields.io/badge/Language-MATLAB-orange)
 
-**Objetivo:** Projetar e aplicar filtros digitais (FIR/IIR) para remoção de ruído em sinais de áudio reais, analisando o impacto no domínio do tempo e da frequência.
+Este projeto aplica conceitos de Processamento Digital de Sinais para restaurar a inteligibilidade de comunicações históricas da missão Apollo 11, removendo tons de interferência ("Quindar Tones") através de filtros digitais projetados via janelamento.
+
+## Objetivo
+Identificar e especificar tecnicamente um filtro digital para remover ruídos de banda estreita em gravações de voz reais, preservando as características históricas do sinal.
 
 -----
 
@@ -24,7 +27,7 @@ Para esta prática, optou-se pela utilização de áudio histórico real contend
 
 O desenvolvimento está dividido em 3 partes:
 
-### Parte 1: Análise do Áudio Ruidoso
+### Parte 1: Análise do Áudio Ruidoso ![Relatorio Parte 1](/docs/readmeTiago.md).
 
   - [x] Carregar o áudio recortado (`.wav` ou `.mp3`) no MATLAB.
   - [x] Reproduzir e descrever o conteúdo audível (Voz vs. Ruído).
