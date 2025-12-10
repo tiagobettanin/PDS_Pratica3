@@ -1,5 +1,3 @@
-clc; clear; close all;
-
 %% 1. Configuração e Carregamento
 arquivo_audio = '../assets/processed/nasa_cut.wav'; 
 dir_saida = '../results/';

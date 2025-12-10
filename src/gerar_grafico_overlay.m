@@ -1,8 +1,6 @@
-clc; clear; close all;
-
 %% 1. Configurações e Parâmetros
-arquivo_audio = '../../../assets/processed/nasa_cut.wav'; 
-dir_saida = './';
+arquivo_audio = '../assets/processed/nasa_cut.wav'; 
+dir_saida = '../results';
 
 if ~exist(dir_saida, 'dir')
     mkdir(dir_saida);
@@ -16,7 +14,6 @@ catch
     error('Erro: Arquivo "nasa_cut.wav" não encontrado em assets/processed/.');
 end
 
-% --- SEUS PARÂMETROS DE PROJETO (Do readmeTiago.md) ---
 Fr_alvo = 3205; % Frequência do Ruído (Bipe)
 Fp1 = 3000;     % Fim da Passagem 1 (Voz)
 Fr1 = 3150;     % Início do Corte (Stopband)
@@ -65,8 +62,8 @@ text(Fr_alvo, pico_altura + (ymax*0.05), '\downarrow Ruído (3205 Hz)', 'Color',
 xline(Fr1, ':', 'Color', 'r', 'LineWidth', 1.2);
 xline(Fr2, ':', 'Color', 'r', 'LineWidth', 1.2);
 
-%% 4. Salvamento Automático Profissional
-nome_arquivo = fullfile(dir_saida, 'grafico2_especificacoes.png');
+%% 4. Salvamento Automático
+nome_arquivo = fullfile(dir_saida, 'grafico3_especificacoes.png');
 
 fprintf('Salvando gráfico em alta resolução...\n');
 exportgraphics(fig_overlay, nome_arquivo, 'BackgroundColor', 'white', 'Resolution', 300);
