@@ -1,86 +1,128 @@
 # PDS - Atividade Prática 3: Projeto de Filtros Digitais
 
-![Status](https://img.shields.io/badge/Status-Análise_Concluída-green) ![MATLAB](https://img.shields.io/badge/Language-MATLAB-orange)
+![Status](https://img.shields.io/badge/Status-Concluído-green) ![MATLAB](https://img.shields.io/badge/Language-MATLAB-orange) ![Contexto](https://img.shields.io/badge/Contexto-Engenharia_Computação-blue)
 
 Este projeto aplica conceitos de Processamento Digital de Sinais para restaurar a inteligibilidade de comunicações históricas da missão Apollo 11, removendo tons de interferência ("Quindar Tones") através de filtros digitais projetados via janelamento.
 
-## Objetivo
-Identificar e especificar tecnicamente um filtro digital para remover ruídos de banda estreita em gravações de voz reais, preservando as características históricas do sinal.
+## 🎯 Objetivo
+Identificar, diagnosticar e especificar tecnicamente um filtro digital para remover ruídos de banda estreita em gravações de voz reais, preservando as características históricas do sinal e a inteligibilidade da fala.
 
------
+---
+
+## 🚀 Como Executar o Projeto
+
+Para reproduzir os resultados e gerar os gráficos, siga os passos abaixo:
+
+1.  Abra o **MATLAB**.
+2.  Navegue até a pasta `src/` deste repositório.
+3.  Digite o comando abaixo no Console e pressione Enter:
+    ```matlab
+    main
+    ```
+4.  Utilize o menu interativo para navegar entre as etapas (Análise, Projeto e Aplicação) ou escolha a opção **9** para rodar o pipeline completo.
+
+> **Nota:** Os resultados (gráficos) serão salvos automaticamente na pasta `results/` e o áudio limpo em `assets/processed/`.
+
+---
 
 ## 🔊 Fonte de Dados (Dataset)
 
-Para esta prática, optou-se pela utilização de áudio histórico real contendo ruídos característicos de transmissão, dispensando a adição artificial de ruído.
+Para esta prática, utilizou-se um áudio histórico real contendo ruídos característicos de transmissão.
 
-  * **Fonte Original:** [Apollo 11 Onboard Audio - Archive.org](https://archive.org/details/Apollo11Audio/Apollo11OnboardAudioHighlightClip2.mp3) (O arquivo original não foi disponibilizado no repositório devido ao seu tamanho; apenas o áudio recortado foi incluído).
-  * **Arquivo Base:** `Apollo11OnboardAudioHighlightClip2.mp3`
-  * **Processamento Inicial:**
-      * **Software Utilizado:** Audacity.
-      * **Procedimento:** Recorte manual de trecho com fala contínua e ruído de fundo.
-      * **Intervalo:** Aproximadamente dos minutos **07:00 ao 09:00** do áudio original.
-      * **Duração Final:** \~1 minuto e 30 segundos.
+* **Fonte Original:** [Apollo 11 Onboard Audio - Archive.org](https://archive.org/details/Apollo11Audio/Apollo11OnboardAudioHighlightClip2.mp3)
+* **Processamento Inicial:** Recorte manual (Audacity) de um trecho de ~1m30s contendo fala e ruído de fundo.
+* **Padronização:** A taxa de amostragem nativa foi preservada ($F_s = 44100 \text{ Hz}$).
 
------
+---
 
-## ✅ Divisão de Tarefas (Roadmap)
+## ✅ Roadmap de Desenvolvimento
 
-O desenvolvimento está dividido em 3 partes:
+### Parte 1: Análise e Diagnóstico
+- [x] Carregar áudio e converter para mono.
+- [x] Plotar sinal no Tempo e Frequência.
+- [x] Diagnosticar a frequência exata do ruído ($3205 \text{ Hz}$).
 
-### Parte 1: Análise do Áudio Ruidoso - [Relatorio Parte 1](/docs/readmeTiago.md).
-
-  - [x] Carregar o áudio recortado (`.wav` ou `.mp3`) no MATLAB.
-  - [x] Reproduzir e descrever o conteúdo audível (Voz vs. Ruído).
-  - [x] **Gráfico 1:** Plotar o sinal no Domínio do Tempo ($t$).
-  - [x] **Gráfico 2:** Calcular e plotar o Espectro de Frequência (FFT).
-  - [x] Identificar a faixa de frequência onde o ruído está concentrado (Diagnóstico).
-  - [x] Definir especificações ($F_p$, $F_r$, Ripple)
-
-### Parte 2: Projeto do Filtro Digital
-
-  - [ ] Escolher a topologia: **FIR** (Janelamento) ou **IIR** (Butterworth/Chebyshev).
-  - [ ] Calcular a ordem ($N$) e os coeficientes do filtro no MATLAB.
-  - [ ] **Gráfico 3:** Plotar a resposta em frequência e ao impulso (`fvtool`).
-  - [ ] Justificar a escolha do tipo de filtro.
+### Parte 2: Projeto do Filtro
+- [x] Definir especificações (Tabela de Projeto).
+- [x] Escolher topologia (FIR Notch) e Método (Janela de Kaiser).
+- [x] Calcular coeficientes e validar ordem ($N=704$).
 
 ### Parte 3: Aplicação e Avaliação
+- [x] Aplicar filtragem de fase zero (`filtfilt`).
+- [x] Gerar áudio limpo (`nasa_limpo.wav`).
+- [x] Comparar espectros e formas de onda (Antes x Depois).
 
-  - [ ] Aplicar o filtro ao sinal original (utilizando `filtfilt` para fase zero).
-  - [ ] Reproduzir o áudio resultante e comparar auditivamente.
-  - [ ] **Gráfico 4:** Plotar sinais no tempo sobrepostos (Original vs. Filtrado).
-  - [ ] **Gráfico 5:** Plotar espectros sobrepostos (Original vs. Filtrado).
-  - [ ] Redigir conclusões sobre a eficácia e possíveis distorções na voz.
+---
 
------
+## 📄 Relatório Técnico e Resultados
 
-## 📝 Relatório
+### 1. Análise do Sinal (Diagnóstico)
 
-O relatório final (PDF) contendo os gráficos e as justificativas técnicas será depositado na pasta `docs/`.
+A análise espectral revelou que a voz humana está concentrada abaixo de 3 kHz. Foi identificado um **pico tonal isolado** em **3205 Hz**, caracterizando um ruído de banda estreita (Narrowband Noise).
 
------
+![Espectro Original](results/grafico_2_espectro.png)
+
+### 2. Decisões de Projeto
+
+#### **Discussões mais aprofundadas no Relatorio.pdf neste diretorio GitHub**
+
+Para remover o ruído sem abafar a voz, optou-se por um filtro **Rejeita-Faixa (Notch)**. Um filtro Passa-Baixa foi descartado pois eliminaria os harmônicos superiores da voz (> 3400 Hz), prejudicando a fidelidade histórica.
+
+**Especificações Técnicas:**
+
+| Parâmetro | Valor | Descrição |
+| :--- | :--- | :--- |
+| **Freq. de Amostragem ($F_s$)** | $44100 \text{ Hz}$ | Taxa nativa do áudio. |
+| **Alvo do Ruído ($F_c$)** | $\approx 3205 \text{ Hz}$ | Frequência central a ser removida. |
+| **Banda de Passagem 1** | $0 - 3000 \text{ Hz}$ | Faixa onde a voz é preservada. |
+| **Banda de Rejeição** | $3150 - 3260 \text{ Hz}$ | "Zona morta" de supressão total. |
+| **Banda de Passagem 2** | $> 3400 \text{ Hz}$ | Faixa de preservação dos agudos. |
+| **Ripple ($R_p$)** | $0.01$ ($1\%$) | Variação máxima permitida no ganho. |
+| **Atenuação Mínima ($A_s$)** | $\ge 40 \text{ dB}$ | Redução do ruído para inaudibilidade. |
+
+**Planejamento Visual (Overlay):**
+A máscara abaixo ilustra as zonas de passagem (verde) e corte (vermelho) sobre o espectro real.
+
+![Planejamento do Filtro](results/grafico_3_planejamento_overlay.png)
+
+### 3. Resultados Obtidos
+
+O filtro FIR projetado (Ordem 704) foi aplicado ao sinal. A comparação espectral comprova a remoção cirúrgica do tom de 3205 Hz, mantendo a integridade das frequências de voz adjacentes.
+
+**Comparação Espectral (Antes vs. Depois):**
+![Comparação Espectral](results/grafico_5_espectro_comparacao.png)
+
+**Comparação Temporal (Zoom 50ms):**
+![Comparação Temporal](results/grafico_4_tempo_comparacao.png)
+
+---
 
 ## 🗂️ Estrutura de Pastas
 
-A organização atual do projeto encontra-se da seguinte forma:
-
 ```text
-.
+
 ├── assets/
 │   └── processed/
-│       └── nasa_cut.wav                      # Áudio cortado (~1m30s) utilizado na análise
+│       ├── nasa_cut.wav            # Áudio original cortado
+│       ├── nasa_limpo.wav          # Áudio filtrado (Resultado Final)
+│       └── coeficientes_filtro.mat # Dados matemáticos do filtro projetado
 ├── docs/
-│   ├── imagens/
-│   │   └── tiago/                            # Recursos visuais e scripts de plotagem
-│   │       ├── fRuido.png                    # Captura manual do pico de ruído
-│   │       ├── grafico.m                     # Script auxiliar de gráfico
-│   │       └── grafico2_especificacoes.png   # Captura das especificaceos do grafico de ruído
-│   ├── Atividade_Prática_3___PDS.pdf         # Roteiro do projeto
-│   ├── Aula_PROJETO_filtros.pdf              # Material de aula
-│   └── readmeTiago.md                        # Notas de desenvolvimento
-├── results/                                  
-│   ├── grafico_1_tempo.png                   # Gráfico 1 (Sinal no tempo)
-│   └── grafico_2_espectro.png                # Gráfico 2 (Gráfico do Espectro)
-├── src/                                      
-│   └── parte1_analise.m                      # Script: Análise e Diagnóstico (Parte 1)
-└── README.MD                                 # Documentação do projeto (este arquivo)
+│   ├── imagens/                    # Recursos visuais extras
+│   ├── Atividade_Prática_3.pdf     # Roteiro original
+│   └── Aula_PROJETO_filtros.pdf    # Material de apoio
+├── results/                        # Gráficos gerados automaticamente
+│   ├── grafico_1_tempo.png
+│   ├── grafico_2_espectro.png
+│   ├── grafico_3_planejamento_overlay.png
+│   ├── grafico_4_tempo_comparacao.png
+│   └── grafico_5_espectro_comparacao.png
+├── src/
+│   ├── main.m                      # <--- ARQUIVO PRINCIPAL 
+│   ├── parte1_analise.m            # Script de Diagnóstico
+│   ├── parte2_projeto.m            # Script de Cálculo do Filtro
+│   ├── parte3_aplicacao.m          # Script de Filtragem e Validação
+│   └── gerar_grafico_overlay.m     # Script auxiliar de visualização
+├── README.MD                       # Documentação Git
+└── Relatorio.pdf                   # Documentação 
 
+```
